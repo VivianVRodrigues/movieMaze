@@ -1,8 +1,3 @@
-// import { useEffect } from "react";
-// import { fetchData } from "./util/api";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getApiConfig } from "./store/homeSlice";
-
 import "./App.css";
 
 import Header from "./components/header/Header";
@@ -13,6 +8,10 @@ import Explore from "./pages/explore/Explore";
 import SearchResult from "./pages/searchResult/SearchResult";
 import PageNotFound from "./pages/404/PageNotFound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { fetchData } from "./util/api";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getApiConfig } from "./store/homeSlice";
 
 function App() {
   // const dispatch = useDispatch();
@@ -29,9 +28,29 @@ function App() {
   //   });
   // };
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchApiConfig();
+  }, []);
+
+  const fetchApiConfig = () => {
+    fetchData("/configuration").then((res) => {
+      const imagePath = res.data.images.secure_base_url + "original";
+
+      const url = {
+        backdrop: imagePath,
+        poster: imagePath,
+        profile: imagePath,
+      };
+
+      dispatch(getApiConfig(url));
+    });
+  };
+
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<Home></Home>} />
         <Route path="/:mediaType/:id" element={<Details></Details>} />
@@ -39,7 +58,7 @@ function App() {
         <Route path="/search/:query" element={<SearchResult></SearchResult>} />
         <Route path="*" element={<PageNotFound></PageNotFound>} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }
