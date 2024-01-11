@@ -1,5 +1,3 @@
-import "./App.css";
-
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
@@ -35,17 +33,26 @@ function App() {
   }, []);
 
   const fetchApiConfig = () => {
-    fetchData("/configuration").then((res) => {
-      const imagePath = res.data.images.secure_base_url + "original";
+    // fetchData("/configuration").then((res) => {
+    //   const imagePath = res.data.images.secure_base_url + "original";
 
-      const url = {
-        backdrop: imagePath,
-        poster: imagePath,
-        profile: imagePath,
-      };
+    //   const url = {
+    //     backdrop: imagePath,
+    //     poster: imagePath,
+    //     profile: imagePath,
+    //   };
 
-      dispatch(getApiConfig(url));
-    });
+    //   dispatch(getApiConfig(url));
+    // });
+    const imagePath = "https://image.tmdb.org/t/p/original";
+
+    const url = {
+      backdrop: imagePath,
+      poster: imagePath,
+      profile: imagePath,
+    };
+
+    dispatch(getApiConfig(url));
   };
 
   return (
