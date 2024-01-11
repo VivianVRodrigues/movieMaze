@@ -7,9 +7,9 @@ const useFetch = (url) => {
   const [err, setErr] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    setData("");
-    setErr(false);
+    // setLoading(true);
+    // setData("");
+    // setErr(false);
 
     fetchData(url)
       .then((res) => {
