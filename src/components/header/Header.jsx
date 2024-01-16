@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
@@ -7,15 +7,46 @@ import "./style.scss";
 
 import logo from "../../assets/filmFlare.svg";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [mobileCondition, setMobileCondition] = useState("");
   const [show, setShow] = useState("top");
   const [query, setQuery] = useState("");
+  const [lastScrollY, setLastScrollY] = useState(0);
 
+  const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  const headerHandler = () => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > 80) {
+      if (currentScrollY > lastScrollY) {
+        setShow("hide");
+        setMobileCondition("");
+      } else {
+        setShow("show");
+      }
+
+      setLastScrollY(currentScrollY);
+    } else {
+      setShow("top");
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", headerHandler);
+
+    return () => {
+      window.removeEventListener("scroll", headerHandler);
+    };
+  }, [lastScrollY]);
 
   const openSearch = () => {
     setShowSearch(true);
@@ -27,13 +58,16 @@ const Header = () => {
     setMobileCondition("showMobileMenu");
   };
 
-  const searchQueryHandler = () => {
+  const searchQueryHandler = (e) => {
     if (e.key === "Enter" && query.length !== 0) {
       navigate(`/search/${query}`);
-    }
-    setTimeout(() => {
       setShowSearch(false);
-    }, 1000);
+    }
+  };
+
+  const navigationHandler = (type) => {
+    navigate(`/explore/${type}`);
+    setMobileCondition("");
   };
 
   return (
@@ -43,10 +77,14 @@ const Header = () => {
           <img src={logo} />
         </div>
         <ul className="menuItems">
-          <li className="menuItem">Movies</li>
-          <li className="menuItem">TV Shows</li>
+          <li className="menuItem" onClick={() => navigationHandler("movies")}>
+            Movies
+          </li>
+          <li className="menuItem" onClick={() => navigationHandler("tv")}>
+            TV Shows
+          </li>
           <li className="menuItem">
-            <HiOutlineSearch />
+            <HiOutlineSearch onClick={() => openSearch()} />
           </li>
         </ul>
 
@@ -72,7 +110,7 @@ const Header = () => {
                 type="text"
                 placeholder="Search for movies or TV shows"
                 onChange={(e) => setQuery(e.target.value)}
-                onKeyUp={() => searchQueryHandler()}
+                onKeyUp={(e) => searchQueryHandler(e)}
               />
               <VscChromeClose onClick={() => setShowSearch(false)} />
             </div>

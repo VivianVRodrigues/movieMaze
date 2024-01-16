@@ -16,7 +16,6 @@ const HeroBanner = () => {
   const { data, loading } = useFetch("/movie/popular");
 
   useEffect(() => {
-    console.log(url);
     const bg =
       url.backdrop +
       data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
@@ -35,7 +34,6 @@ const HeroBanner = () => {
     }
   };
 
-  console.log(loading);
   return (
     <div className="heroBanner">
       <div className="heroImage">{loading || <Img src={background} />}</div>
