@@ -71,9 +71,9 @@
         position: relative;
         width: 100%;
         aspect-ratio: 1 / 1.5;
-        // display: flex;
-        // align-items: flex-end;
-        // justify-content: space-between;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
         padding: 10px;
 
         .lazy-load-image-background {
@@ -89,6 +89,27 @@
             object-fit: cover;
             object-position: center;
             border-radius: 12px;
+          }
+        }
+
+        .circleRating {
+          width: 40px;
+          height: 40px;
+          position: relative;
+          top: 30px;
+          background-color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @include md {
+            width: 50px;
+            height: 50px;
+          }
+
+          svg {
+            width: 80%;
           }
         }
       }
@@ -120,6 +141,7 @@
 
   .loadingSkeleton {
     display: flex;
+    align-items: center;
     gap: 10px;
     margin-right: -20px;
     margin-left: -20px;
@@ -131,6 +153,7 @@
       padding: 0;
       gap: 20px;
       overflow: hidden;
+      width: 100%;
     }
 
     .skeletonItem {
@@ -142,6 +165,10 @@
 
       @include md {
         width: calc(25% - 15px);
+      }
+
+      @include lg {
+        width: calc(20% - 16px);
       }
 
       .poster {

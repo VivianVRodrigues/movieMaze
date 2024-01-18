@@ -1,20 +1,51 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import "./style.scss";
+
 import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
+import dayjs from "dayjs";
+
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import ContentWrapper from "../contentWrapper/ContentWrapper";
-import Img from "../../components/lazyLoadImage/Img";
+import Img from "../lazyLoadImage/Img";
 import PosterFallback from "../../assets/no-poster.png";
-import "./style.scss";
-import dayjs from "dayjs";
+import CircleRating from "../circleRating/CircleRating";
+import Genres from "../genres/Genres";
 
 const Corousel = ({ data, loading }) => {
   const corouselContainer = useRef();
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(true);
+
+  const navigation = (dir) => {
+    const container = corouselContainer.current;
+
+    const scrollAmount =
+      dir === "right"
+        ? container.scrollLeft + container.offsetWidth + 20
+        : container.scrollLeft - (container.offsetWidth + 20);
+
+    container.scrollTo({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+
+    if (scrollAmount > 0) setShowLeft(true);
+    else setShowLeft(false);
+
+    if (
+      scrollAmount >=
+      container.offsetWidth * (container.offsetWidth > 1000 ? 3 : 4)
+    )
+      setShowRight(false);
+    else setShowRight(true);
+  };
 
   const skItem = () => {
     return (
@@ -31,11 +62,20 @@ const Corousel = ({ data, loading }) => {
   return (
     <div className="corousel">
       <ContentWrapper>
-        <BsFillArrowLeftCircleFill className="arrow left" />
-        <BsFillArrowRightCircleFill className="arrow right" />
-
+        {showLeft && (
+          <BsFillArrowLeftCircleFill
+            className="arrow left"
+            onClick={() => navigation("left")}
+          />
+        )}
+        {!loading && showRight && (
+          <BsFillArrowRightCircleFill
+            className="arrow right"
+            onClick={() => navigation("right")}
+          />
+        )}
         {!loading ? (
-          <div className="corouselItems">
+          <div className="corouselItems" ref={corouselContainer}>
             {data?.results?.map((item) => {
               const src = item.poster_path
                 ? url.poster + item.poster_path
@@ -44,6 +84,8 @@ const Corousel = ({ data, loading }) => {
                 <div className="corouselItem" key={item.id}>
                   <div className="poster">
                     <Img src={src}></Img>
+                    <CircleRating rating={item.vote_average.toFixed(1)} />
+                    <Genres />
                   </div>
                   <div className="textBlock">
                     <span className="text">{item.title || item.name}</span>
@@ -58,6 +100,7 @@ const Corousel = ({ data, loading }) => {
         ) : (
           <>
             <div className="loadingSkeleton">
+              {skItem()}
               {skItem()}
               {skItem()}
               {skItem()}
