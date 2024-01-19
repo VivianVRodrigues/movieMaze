@@ -85,7 +85,7 @@ const Corousel = ({ data, loading }) => {
                   <div className="poster">
                     <Img src={src}></Img>
                     <CircleRating rating={item.vote_average.toFixed(1)} />
-                    <Genres />
+                    <Genres genre_ids={item.genre_ids.slice(0, 2)} />
                   </div>
                   <div className="textBlock">
                     <span className="text">{item.title || item.name}</span>

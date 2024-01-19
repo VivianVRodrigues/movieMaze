@@ -5,7 +5,7 @@ import { VscChromeClose } from "react-icons/vsc";
 
 import "./style.scss";
 
-import logo from "../../assets/filmFlare.svg";
+import logo from "../../assets/filmFlare-logo.png";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -75,6 +75,7 @@ const Header = () => {
       <ContentWrapper>
         <div className="logo">
           <img src={logo} />
+          <span>FILMFLARE</span>
         </div>
         <ul className="menuItems">
           <li className="menuItem" onClick={() => navigationHandler("movies")}>

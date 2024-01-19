@@ -28,9 +28,29 @@
     justify-content: space-between;
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       cursor: pointer;
+
       img {
-        height: 50px;
+        height: 40px;
+
+        @include md {
+          height: 50px;
+        }
+      }
+
+      span {
+        font-size: 23px;
+        font-weight: 900;
+        background: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+
+        @include md {
+          font-size: 30px;
+        }
       }
     }
 
