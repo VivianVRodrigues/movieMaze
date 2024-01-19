@@ -9,7 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { fetchData } from "./util/api";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getApiConfig } from "./store/homeSlice";
+import { getApiConfig, getGenres } from "./store/homeSlice";
 
 function App() {
   // const dispatch = useDispatch();
@@ -30,6 +30,7 @@ function App() {
 
   useEffect(() => {
     fetchApiConfig();
+    genreConfig();
   }, []);
 
   const fetchApiConfig = () => {
@@ -53,6 +54,27 @@ function App() {
     };
 
     dispatch(getApiConfig(url));
+  };
+
+  const genreConfig = async () => {
+    let promises = [];
+    let endPoints = ["tv", "movie"];
+    let allGenres = {};
+
+    endPoints.map((type) => {
+      promises.push(fetchData(`/genre/${type}/list`));
+    });
+
+    const responses = await Promise.all(promises);
+    const data = responses.map((res) => res.data);
+
+    const dnejknad = data.map(({ genres }) => {
+      return genres.map((genre) => {
+        return (allGenres[genre.id] = genre.name);
+      });
+    });
+
+    dispatch(getGenres(allGenres));
   };
 
   return (

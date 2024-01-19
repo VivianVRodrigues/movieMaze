@@ -14,21 +14,25 @@ const SwitchTabs = ({ data, tabsHandler }) => {
   };
 
   return (
-    <div className="switchTabs">
-      <div className="tabItems">
-        {data.map((tab, index) => (
-          <span
-            key={index}
-            className={`tabItem ${currentTab === index ? "active" : ""}`}
-            onClick={() => activeTabHandler(tab, index)}
-          >
-            {tab}
-          </span>
-        ))}
+    <>
+      {data[0] && (
+        <div className="switchTabs">
+          <div className="tabItems">
+            {data?.map((tab, index) => (
+              <span
+                key={index}
+                className={`tabItem ${currentTab === index ? "active" : ""}`}
+                onClick={() => activeTabHandler(tab, index)}
+              >
+                {tab}
+              </span>
+            ))}
 
-        <div className="movingBG" style={{ left }} />
-      </div>
-    </div>
+            <div className="movingBG" style={{ left }} />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

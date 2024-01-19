@@ -5,9 +5,9 @@ import SwitchTabs from "../../../components/switchTabs/SwitchTabs";
 import useFetch from "../../../hooks/useFetch";
 import Corousel from "../../../components/corousel/Corousel";
 
-const Trending = () => {
-  const [endPoint, setEndPoint] = useState("day");
-  const { data, loading } = useFetch(`/trending/all/${endPoint}`);
+const Trending = ({ title, options, initalEndpoint, category }) => {
+  const [endPoint, setEndPoint] = useState(initalEndpoint);
+  const { data, loading } = useFetch(`/${endPoint}/${category}`);
 
   const tabsHandler = (currentTab) => {
     currentTab = currentTab.toLowerCase();
@@ -17,10 +17,10 @@ const Trending = () => {
   return (
     <div className="corouselSection">
       <ContentWrapper>
-        <span className="corouselTitle">Trending</span>
-        <SwitchTabs data={["Day", "Week"]} tabsHandler={tabsHandler} />
+        <span className="corouselTitle">{title}</span>
+        <SwitchTabs data={options} tabsHandler={tabsHandler} />
       </ContentWrapper>
-      <Corousel data={data} mediaType={"trending"} loading={loading} />
+      <Corousel data={data} mediaType={endPoint} loading={loading} />
     </div>
   );
 };

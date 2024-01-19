@@ -114,11 +114,13 @@
         }
 
         .genreIds {
+          display: none;
+
           @include md {
             position: relative;
             display: flex;
-            // flex-flow: wrap;
-            // justify-content: flex-end;
+            flex-flow: wrap;
+            justify-content: flex-end;
             gap: 5px;
           }
         }

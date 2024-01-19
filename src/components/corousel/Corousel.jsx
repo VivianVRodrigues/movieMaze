@@ -16,7 +16,7 @@ import PosterFallback from "../../assets/no-poster.png";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 
-const Corousel = ({ data, loading }) => {
+const Corousel = ({ data, loading, mediaType }) => {
   const corouselContainer = useRef();
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
@@ -80,8 +80,15 @@ const Corousel = ({ data, loading }) => {
               const src = item.poster_path
                 ? url.poster + item.poster_path
                 : PosterFallback;
+
+              mediaType =
+                mediaType === "trending" ? item.media_type : mediaType;
               return (
-                <div className="corouselItem" key={item.id}>
+                <div
+                  className="corouselItem"
+                  key={item.id}
+                  onClick={() => navigate(`/${mediaType}/${item.id}`)}
+                >
                   <div className="poster">
                     <Img src={src}></Img>
                     <CircleRating rating={item.vote_average.toFixed(1)} />
