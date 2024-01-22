@@ -81,13 +81,13 @@ const Corousel = ({ data, loading, mediaType }) => {
                 ? url.poster + item.poster_path
                 : PosterFallback;
 
-              mediaType =
-                mediaType === "trending" ? item.media_type : mediaType;
               return (
                 <div
                   className="corouselItem"
                   key={item.id}
-                  onClick={() => navigate(`/${mediaType}/${item.id}`)}
+                  onClick={() =>
+                    navigate(`/${item.media_type || mediaType}/${item.id}`)
+                  }
                 >
                   <div className="poster">
                     <Img src={src}></Img>

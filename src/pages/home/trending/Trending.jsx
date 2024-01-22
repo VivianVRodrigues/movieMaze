@@ -20,7 +20,7 @@ const Trending = () => {
         <span className="corouselTitle">Trending</span>
         <SwitchTabs data={["Day", "Week"]} tabsHandler={tabsHandler} />
       </ContentWrapper>
-      <Corousel data={data} mediaType={"trending"} loading={loading} />
+      <Corousel data={data} loading={loading} />
     </div>
   );
 };
