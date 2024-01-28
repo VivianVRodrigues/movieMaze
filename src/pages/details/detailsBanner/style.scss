@@ -118,6 +118,7 @@
         display: flex;
         align-items: center;
         gap: 20px;
+        margin-bottom: 25px;
 
         .rating {
           background-color: white;
@@ -188,6 +189,63 @@
               stroke: var(--pink);
             }
           }
+        }
+      }
+      .overview {
+        margin-bottom: 25px;
+
+        .heading {
+          font-size: 24px;
+          margin-bottom: 10px;
+        }
+
+        .overviewDiscription {
+          line-height: 25px;
+
+          @include md {
+            padding-right: 100px;
+          }
+        }
+      }
+      .infoDiv {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+        margin-bottom: 10px;
+
+        .info {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-flow: row wrap;
+          line-height: 24px;
+
+          .label {
+            font-weight: bold;
+            margin-right: 10px;
+          }
+
+          .context {
+            opacity: 0.6;
+          }
+        }
+      }
+
+      .members {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 15px 0;
+        margin-bottom: 10px;
+        line-height: 24px;
+
+        .label {
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        .member {
+          opacity: 0.8;
         }
       }
     }
