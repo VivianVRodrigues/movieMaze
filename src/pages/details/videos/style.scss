@@ -1,7 +1,11 @@
 @import "../../../mixins.scss";
 
 .videos {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+
+  @include md {
+    margin-bottom: 30px;
+  }
 
   .videoItems {
     display: flex;
