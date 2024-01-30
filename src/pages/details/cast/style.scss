@@ -23,6 +23,7 @@
     display: flex;
     gap: 20px;
     overflow-y: hidden;
+    padding-bottom: 10px;
 
     @include md {
       &::-webkit-scrollbar {

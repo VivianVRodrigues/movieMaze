@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useFetch from "../../hooks/useFetch";
 import Cast from "./cast/Cast";
+import Videos from "./videos/Videos";
 
 const Details = () => {
   const { mediaType, id } = useParams();
@@ -25,6 +26,7 @@ const Details = () => {
         crew={creditsData?.crew}
       />
       <Cast cast={creditsData?.cast} loading={creditsLoading} />
+      <Videos videos={videoData?.results} loading={videoLoading} />
     </div>
   );
 };
