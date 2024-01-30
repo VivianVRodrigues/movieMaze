@@ -4,6 +4,7 @@ import DetailsBanner from "./detailsBanner/DetailsBanner";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useFetch from "../../hooks/useFetch";
+import Cast from "./cast/Cast";
 
 const Details = () => {
   const { mediaType, id } = useParams();
@@ -23,6 +24,7 @@ const Details = () => {
         videos={videoData?.results?.[0]}
         crew={creditsData?.crew}
       />
+      <Cast cast={creditsData?.cast} loading={creditsLoading} />
     </div>
   );
 };
