@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./style.scss";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Img from "../../../components/lazyLoadImage/Img";
 import PlayButton from "../playbutton/PlayButton";
 import VideoPopup from "../videoPopup/VideoPopup";
 
+import {
+  BsFillArrowLeftCircleFill,
+  BsFillArrowRightCircleFill,
+} from "react-icons/bs";
+
 const Videos = ({ videos, loading }) => {
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);
+  const videoContainer = useRef();
 
   const skeleton = () => {
     return (
@@ -18,18 +24,35 @@ const Videos = ({ videos, loading }) => {
     );
   };
 
-  //   const videoHandler = (videoId) => {
-  //     setShow(true);
-  //     videoId(videoId);
-  //   };
+  const navigation = (dir) => {
+    const container = videoContainer.current;
+
+    const scrollAmount =
+      dir === "right"
+        ? container.scrollLeft + container.offsetWidth + 20
+        : container.scrollLeft - (container.offsetWidth + 20);
+
+    container.scrollTo({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <div className="videos">
       <ContentWrapper>
+        <BsFillArrowLeftCircleFill
+          className={`arrow left`}
+          onClick={() => navigation("left")}
+        />
+        <BsFillArrowRightCircleFill
+          className={`arrow right`}
+          onClick={() => navigation("right")}
+        />
         {!loading ? (
           <>
             <div className="videoHeading">Official Videos</div>
-            <div className="videoItems">
+            <div className="videoItems" ref={videoContainer}>
               {videos?.map((video, id) => (
                 <div
                   className="videoItem"
