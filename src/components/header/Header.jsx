@@ -73,7 +73,7 @@ const Header = () => {
   return (
     <header className={`header ${mobileCondition} ${show}`}>
       <ContentWrapper>
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <img src={logo} />
           <span>FILMFLARE</span>
         </div>
