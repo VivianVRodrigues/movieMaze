@@ -27,26 +27,29 @@ const Videos = ({ videos, loading }) => {
     <div className="videos">
       <ContentWrapper>
         {!loading ? (
-          <div className="videoItems">
-            {videos?.map((video, id) => (
-              <div
-                className="videoItem"
-                key={id}
-                onClick={() => {
-                  setShow(true);
-                  setVideoId(video.key);
-                }}
-              >
-                <div className="thumbnail">
-                  <Img
-                    src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
-                  />
-                  <PlayButton />
+          <>
+            <div className="videoHeading">Official Videos</div>
+            <div className="videoItems">
+              {videos?.map((video, id) => (
+                <div
+                  className="videoItem"
+                  key={id}
+                  onClick={() => {
+                    setShow(true);
+                    setVideoId(video.key);
+                  }}
+                >
+                  <div className="thumbnail">
+                    <Img
+                      src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
+                    />
+                    <PlayButton />
+                  </div>
+                  <div className="title">{video.name}</div>
                 </div>
-                <div className="title">{video.name}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         ) : (
           <div className="videosSkeleton">
             {skeleton()}

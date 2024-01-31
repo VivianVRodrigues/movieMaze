@@ -15,7 +15,7 @@ const SwitchTabs = ({ data, tabsHandler }) => {
 
   return (
     <>
-      {data[0] && (
+      {data?.[0] && (
         <div className="switchTabs">
           <div className="tabItems">
             {data?.map((tab, index) => (

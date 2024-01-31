@@ -7,6 +7,17 @@
     margin-bottom: 30px;
   }
 
+  .videoHeading {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+
+    @include md {
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+  }
+
   .videoItems {
     display: flex;
     gap: 20px;
