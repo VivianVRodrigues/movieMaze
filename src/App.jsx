@@ -68,7 +68,7 @@ function App() {
     const responses = await Promise.all(promises);
     const data = responses.map((res) => res.data);
 
-    const dnejknad = data.map(({ genres }) => {
+    data.map(({ genres }) => {
       return genres.map((genre) => {
         return (allGenres[genre.id] = genre.name);
       });
