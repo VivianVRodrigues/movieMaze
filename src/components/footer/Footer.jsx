@@ -18,11 +18,11 @@ const Footer = () => {
         <li className="term">FAQ</li>
       </ul>
       <div className="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur.
+        FilmFlare, your ultimate companion for an immersive and personalized
+        movie-watching experience. At FilmFlare, we believe that every movie
+        enthusiast deserves a seamless platform to explore, discover, and enjoy
+        their favorite films.Explore an extensive library of movies from various
+        genres, including classics, blockbusters, and hidden gems.
       </div>
       <div className="icons">
         <span className="icon">
