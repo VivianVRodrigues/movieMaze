@@ -36,15 +36,11 @@ const Corousel = ({ data, loading, mediaType }) => {
       behavior: "smooth",
     });
 
-    if (scrollAmount > 0) setShowLeft(true);
-    else setShowLeft(false);
-
-    if (
-      scrollAmount >=
-      container.offsetWidth * (container.offsetWidth > 1000 ? 3 : 4)
-    )
-      setShowRight(false);
-    else setShowRight(true);
+    setShowLeft(scrollAmount > 0);
+    setShowRight(
+      container.scrollLeft + (container.offsetWidth + 20) * 2 <
+        container.scrollWidth
+    );
   };
 
   const skItem = () => {

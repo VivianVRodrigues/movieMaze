@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import "./style.scss";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Img from "../../../components/lazyLoadImage/Img";
@@ -13,7 +13,14 @@ import {
 const Videos = ({ videos, loading }) => {
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
   const videoContainer = useRef();
+
+  useEffect(() => {
+    const container = videoContainer.current;
+    setShowRight(container?.clientWidth < container?.scrollWidth);
+  }, [loading]);
 
   const skeleton = () => {
     return (
@@ -24,7 +31,7 @@ const Videos = ({ videos, loading }) => {
     );
   };
 
-  const navigation = (dir) => {
+  const handleNavigation = (dir) => {
     const container = videoContainer.current;
 
     const scrollAmount =
@@ -36,19 +43,29 @@ const Videos = ({ videos, loading }) => {
       left: scrollAmount,
       behavior: "smooth",
     });
+
+    setShowLeft(scrollAmount > 0);
+    setShowRight(
+      container.scrollLeft + (container.offsetWidth + 20) * 2 <
+        container.scrollWidth
+    );
   };
 
   return (
     <div className="videos">
       <ContentWrapper>
-        <BsFillArrowLeftCircleFill
-          className={`arrow left`}
-          onClick={() => navigation("left")}
-        />
-        <BsFillArrowRightCircleFill
-          className={`arrow right`}
-          onClick={() => navigation("right")}
-        />
+        {showLeft && (
+          <BsFillArrowLeftCircleFill
+            className={`arrow left`}
+            onClick={() => handleNavigation("left")}
+          />
+        )}
+        {!loading && showRight && (
+          <BsFillArrowRightCircleFill
+            className={`arrow right`}
+            onClick={() => handleNavigation("right")}
+          />
+        )}
         {!loading ? (
           <>
             <div className="videoHeading">Official Videos</div>

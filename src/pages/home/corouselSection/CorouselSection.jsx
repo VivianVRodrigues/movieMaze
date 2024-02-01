@@ -15,13 +15,15 @@ const Trending = ({ title, options, initalEndpoint, category }) => {
   };
 
   return (
-    <div className="corouselSection">
-      <ContentWrapper>
-        <span className="corouselTitle">{title}</span>
-        <SwitchTabs data={options} tabsHandler={tabsHandler} />
-      </ContentWrapper>
-      <Corousel data={data} mediaType={endPoint} loading={loading} />
-    </div>
+    data?.results?.length > 0 && (
+      <div className="corouselSection">
+        <ContentWrapper>
+          <span className="corouselTitle">{title}</span>
+          <SwitchTabs data={options} tabsHandler={tabsHandler} />
+        </ContentWrapper>
+        <Corousel data={data} mediaType={endPoint} loading={loading} />
+      </div>
+    )
   );
 };
 
