@@ -30,7 +30,7 @@ const Explore = () => {
 
   const fetchInitialData = () => {
     setLoading(true);
-    fetchData(`/discover/${mediaType}`, filter).then((res) => {
+    fetchData(`/discover/${mediaType}?page=${page}`, filter).then((res) => {
       setData(res.data);
       setPage((oldpage) => oldpage + 1);
       setLoading(false);
@@ -38,7 +38,7 @@ const Explore = () => {
   };
 
   const fetchNextData = () => {
-    fetchData(`/discover/${mediaType}`, filter).then((res) => {
+    fetchData(`/discover/${mediaType}?page=${page}`, filter).then((res) => {
       setData({
         ...data,
         results: [...data?.results, ...res?.data?.results],

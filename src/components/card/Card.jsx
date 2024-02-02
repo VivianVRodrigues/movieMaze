@@ -17,8 +17,8 @@ const Card = ({ item, explore }) => {
       onClick={() => navigate(`/${item.media_type || mediaType}/${item.id}`)}
     >
       <div className="poster">
-        <Img src={src}></Img>
-        {explore && <CircleRating rating={item.vote_average.toFixed(1)} />}
+        <img src={src} />
+        {explore && <CircleRating rating={item?.vote_average?.toFixed(1)} />}
       </div>
       <div className="textBlock">
         <span className="text">{item.title || item.name}</span>
