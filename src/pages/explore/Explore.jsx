@@ -84,8 +84,6 @@ const Explore = () => {
     }
   };
 
-  console.log(filter);
-
   const sortHandler = (selectedItem) => {
     setSortSelected(selectedItem);
 
