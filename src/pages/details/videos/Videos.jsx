@@ -52,57 +52,59 @@ const Videos = ({ videos, loading }) => {
   };
 
   return (
-    <div className="videos">
-      <ContentWrapper>
-        {showLeft && (
-          <BsFillArrowLeftCircleFill
-            className={`arrow left`}
-            onClick={() => handleNavigation("left")}
-          />
-        )}
-        {!loading && showRight && (
-          <BsFillArrowRightCircleFill
-            className={`arrow right`}
-            onClick={() => handleNavigation("right")}
-          />
-        )}
-        {!loading ? (
-          <>
-            <div className="videoHeading">Official Videos</div>
-            <div className="videoItems" ref={videoContainer}>
-              {videos?.map((video, id) => (
-                <div
-                  className="videoItem"
-                  key={id}
-                  onClick={() => {
-                    setShow(true);
-                    setVideoId(video.key);
-                  }}
-                >
-                  <div className="thumbnail">
-                    <Img
-                      src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
-                    />
-                    <PlayButton />
+    videos?.length > 0 && (
+      <div className="videos">
+        <ContentWrapper>
+          {showLeft && (
+            <BsFillArrowLeftCircleFill
+              className={`arrow left`}
+              onClick={() => handleNavigation("left")}
+            />
+          )}
+          {!loading && showRight && (
+            <BsFillArrowRightCircleFill
+              className={`arrow right`}
+              onClick={() => handleNavigation("right")}
+            />
+          )}
+          {!loading ? (
+            <>
+              <div className="videoHeading">Official Videos</div>
+              <div className="videoItems" ref={videoContainer}>
+                {videos?.map((video, id) => (
+                  <div
+                    className="videoItem"
+                    key={id}
+                    onClick={() => {
+                      setShow(true);
+                      setVideoId(video.key);
+                    }}
+                  >
+                    <div className="thumbnail">
+                      <Img
+                        src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
+                      />
+                      <PlayButton />
+                    </div>
+                    <div className="title">{video.name}</div>
                   </div>
-                  <div className="title">{video.name}</div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="videosSkeleton">
+              {skeleton()}
+              {skeleton()}
+              {skeleton()}
+              {skeleton()}
+              {skeleton()}
+              {skeleton()}
             </div>
-          </>
-        ) : (
-          <div className="videosSkeleton">
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-            {skeleton()}
-          </div>
-        )}
-      </ContentWrapper>
-      <VideoPopup show={show} setShow={setShow} videoId={videoId} />
-    </div>
+          )}
+        </ContentWrapper>
+        <VideoPopup show={show} setShow={setShow} videoId={videoId} />
+      </div>
+    )
   );
 };
 

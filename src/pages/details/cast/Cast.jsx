@@ -18,41 +18,43 @@ const Cast = ({ cast, loading }) => {
     );
   };
   return (
-    <div className="castSection">
-      {!loading ? (
-        <ContentWrapper>
-          <div className="castHeading">Top cast</div>
-          <div className="castItems">
-            {cast?.map((member, id) => {
-              const src = member.profile_path
-                ? url.backdrop + member.profile_path
-                : avatar;
+    cast?.length > 0 && (
+      <div className="castSection">
+        {!loading ? (
+          <ContentWrapper>
+            <div className="castHeading">Top cast</div>
+            <div className="castItems">
+              {cast?.map((member, id) => {
+                const src = member.profile_path
+                  ? url.backdrop + member.profile_path
+                  : avatar;
 
-              return (
-                <div className="castItem" key={id}>
-                  <div className="circle">
-                    <Img src={src} />
+                return (
+                  <div className="castItem" key={id}>
+                    <div className="circle">
+                      <Img src={src} />
+                    </div>
+                    <div className="originalName">{member.name}</div>
+                    <div className="movieName">{member.character}</div>
                   </div>
-                  <div className="originalName">{member.name}</div>
-                  <div className="movieName">{member.character}</div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          </ContentWrapper>
+        ) : (
+          <div className="castSkeletonSection">
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
+            {skeleton()}
           </div>
-        </ContentWrapper>
-      ) : (
-        <div className="castSkeletonSection">
-          {skeleton()}
-          {skeleton()}
-          {skeleton()}
-          {skeleton()}
-          {skeleton()}
-          {skeleton()}
-          {skeleton()}
-          {skeleton()}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    )
   );
 };
 

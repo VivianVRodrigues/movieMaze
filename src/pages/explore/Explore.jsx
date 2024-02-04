@@ -142,7 +142,12 @@ const Explore = () => {
                 loader={<Loader />}
               >
                 {data?.results?.map((item, id) => (
-                  <Card item={item} key={id} explore={true} />
+                  <Card
+                    item={item}
+                    key={id}
+                    explore={true}
+                    mediaType={mediaType}
+                  />
                 ))}
               </InfiniteScroll>
             </>

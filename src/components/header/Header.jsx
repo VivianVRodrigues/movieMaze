@@ -111,7 +111,7 @@ const Header = () => {
                 type="text"
                 placeholder="Search for movies or TV shows"
                 onChange={(e) => setQuery(e.target.value)}
-                onKeyUp={(e) => searchQueryHandler(e)}
+                onKeyDown={(e) => searchQueryHandler(e)}
               />
               <VscChromeClose onClick={() => setShowSearch(false)} />
             </div>
