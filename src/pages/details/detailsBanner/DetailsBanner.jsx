@@ -14,6 +14,12 @@ import VideoPopup from "../videoPopup/VideoPopup";
 const DetailsBanner = ({ videos, crew }) => {
   const { mediaType, id } = useParams();
   const { loading, data } = useFetch(`/${mediaType}/${id}`);
+  const { data: providerData } = useFetch(
+    `/${mediaType}/${id}/watch/providers`
+  );
+
+  const movieprovider = providerData?.results?.AD?.flatrate;
+
   const { url } = useSelector((state) => state.home);
 
   const [show, setShow] = useState(false);
@@ -114,6 +120,25 @@ const DetailsBanner = ({ videos, crew }) => {
                       <span className="text">Watch Trailer</span>
                     </div>
                   </div>
+                  {movieprovider?.length > 0 && (
+                    <div className="providers">
+                      <div className="providersheading">Available on : </div>
+                      <div className="movieProviders">
+                        {movieprovider?.map((provider, i) => {
+                          const providerUrl = provider?.logo_path;
+                          return (
+                            <div className="movieProvider" key={i}>
+                              <img src={url.backdrop + providerUrl} />
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <img
+                        height="11px"
+                        src="https://widget.justwatch.com/assets/JW_logo_color_10px.svg"
+                      ></img>
+                    </div>
+                  )}
                   <div className="overview">
                     <div className="heading">Overview</div>
                     <div className="overviewDiscription">{data.overview}</div>

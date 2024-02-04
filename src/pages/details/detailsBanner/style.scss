@@ -191,6 +191,38 @@
           }
         }
       }
+
+      .providers {
+        margin-bottom: 25px;
+        .providersheading {
+          font-size: 24px;
+          margin-bottom: 10px;
+        }
+
+        .movieProviders {
+          display: flex;
+          gap: 10px;
+          flex-flow: row wrap;
+          @include md {
+            gap: 20px;
+          }
+
+          .movieProvider {
+            cursor: pointer;
+            img {
+              width: 60px;
+              height: 60px;
+              border-radius: 50%;
+
+              @include md {
+                width: 70px;
+                height: 70px;
+              }
+            }
+          }
+        }
+      }
+
       .overview {
         margin-bottom: 25px;
 
