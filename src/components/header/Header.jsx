@@ -9,7 +9,7 @@ import logo from "../../assets/filmFlare-logo.png";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ noHeader }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [mobileCondition, setMobileCondition] = useState("");
   const [show, setShow] = useState("top");
@@ -71,54 +71,56 @@ const Header = () => {
   };
 
   return (
-    <header className={`header ${mobileCondition} ${show}`}>
-      <ContentWrapper>
-        <div className="logo" onClick={() => navigate("/")}>
-          <img src={logo} />
-          <span>FILMFLARE</span>
-        </div>
-        <ul className="menuItems">
-          <li className="menuItem" onClick={() => navigationHandler("movie")}>
-            Movies
-          </li>
-          <li className="menuItem" onClick={() => navigationHandler("tv")}>
-            TV Shows
-          </li>
-          <li className="menuItem">
+    noHeader || (
+      <header className={`header ${mobileCondition} ${show}`}>
+        <ContentWrapper>
+          <div className="logo" onClick={() => navigate("/")}>
+            <img src={logo} />
+            <span>FILMFLARE</span>
+          </div>
+          <ul className="menuItems">
+            <li className="menuItem" onClick={() => navigationHandler("movie")}>
+              Movies
+            </li>
+            <li className="menuItem" onClick={() => navigationHandler("tv")}>
+              TV Shows
+            </li>
+            <li className="menuItem">
+              <HiOutlineSearch onClick={() => openSearch()} />
+            </li>
+          </ul>
+
+          <div className="mobileMenuItems">
             <HiOutlineSearch onClick={() => openSearch()} />
-          </li>
-        </ul>
-
-        <div className="mobileMenuItems">
-          <HiOutlineSearch onClick={() => openSearch()} />
-          {mobileCondition === "showMobileMenu" ? (
-            <VscChromeClose
-              onClick={() => {
-                setMobileCondition("hideMobileMenu");
-              }}
-            />
-          ) : (
-            <SlMenu onClick={() => openMobileMenu()} />
-          )}
-        </div>
-      </ContentWrapper>
-
-      {showSearch && (
-        <div className="searchBar">
-          <ContentWrapper>
-            <div className="searchInput">
-              <input
-                type="text"
-                placeholder="Search for movies or TV shows"
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => searchQueryHandler(e)}
+            {mobileCondition === "showMobileMenu" ? (
+              <VscChromeClose
+                onClick={() => {
+                  setMobileCondition("hideMobileMenu");
+                }}
               />
-              <VscChromeClose onClick={() => setShowSearch(false)} />
-            </div>
-          </ContentWrapper>
-        </div>
-      )}
-    </header>
+            ) : (
+              <SlMenu onClick={() => openMobileMenu()} />
+            )}
+          </div>
+        </ContentWrapper>
+
+        {showSearch && (
+          <div className="searchBar">
+            <ContentWrapper>
+              <div className="searchInput">
+                <input
+                  type="text"
+                  placeholder="Search for movies or TV shows"
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => searchQueryHandler(e)}
+                />
+                <VscChromeClose onClick={() => setShowSearch(false)} />
+              </div>
+            </ContentWrapper>
+          </div>
+        )}
+      </header>
+    )
   );
 };
 

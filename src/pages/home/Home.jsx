@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
 import HeroBanner from "./heroBanner/HeroBanner";
 import Trending from "./trending/Trending";
 import CorouselSection from "./corouselSection/CorouselSection";
 
-const Home = () => {
+const Home = ({ setNoHeader, setNoFooter }) => {
+  useEffect(() => {
+    setNoFooter(false);
+    setNoHeader(false);
+  }, []);
+
   return (
     <div>
       <HeroBanner />

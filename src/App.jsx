@@ -1,5 +1,6 @@
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import Register from "./pages/register/Register";
 import Home from "./pages/home/Home";
 import Details from "./pages/details/Details";
 import Explore from "./pages/explore/Explore";
@@ -7,9 +8,10 @@ import SearchResult from "./pages/searchResult/SearchResult";
 import PageNotFound from "./pages/404/PageNotFound";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { fetchData } from "./util/api";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getApiConfig, getGenres } from "./store/homeSlice";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
   // const dispatch = useDispatch();
@@ -27,6 +29,8 @@ function App() {
   // };
 
   const dispatch = useDispatch();
+  const [noHeader, setNoHeader] = useState(false);
+  const [noFooter, setNoFooter] = useState(false);
 
   useEffect(() => {
     fetchApiConfig();
@@ -77,17 +81,37 @@ function App() {
     dispatch(getGenres(allGenres));
   };
 
+  const { user } = useContext(AuthContext);
+
   return (
     <BrowserRouter>
-      <Header />
+      <Header noHeader={noHeader} />
       <Routes>
-        <Route path="/" element={<Home></Home>} />
+        <Route
+          path="/"
+          element={
+            <Register
+              setNoHeader={setNoHeader}
+              setNoFooter={setNoFooter}
+            ></Register>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            user ? (
+              <Home setNoHeader={setNoHeader} setNoFooter={setNoFooter}></Home>
+            ) : (
+              <Register></Register>
+            )
+          }
+        />
         <Route path="/:mediaType/:id" element={<Details></Details>} />
         <Route path="/explore/:mediaType" element={<Explore></Explore>} />
         <Route path="/search/:query" element={<SearchResult></SearchResult>} />
         <Route path="*" element={<PageNotFound></PageNotFound>} />
       </Routes>
-      <Footer />
+      <Footer noFooter={noFooter} />
     </BrowserRouter>
   );
 }
