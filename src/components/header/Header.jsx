@@ -10,6 +10,9 @@ import logo from "../../assets/filmFlare-logo.png";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { deleteUser, signOut } from "firebase/auth";
+import { auth, database, refdb } from "../../firebase";
+import { remove } from "firebase/database";
 
 const Header = ({ noHeader }) => {
   const [showSearch, setShowSearch] = useState(false);
@@ -82,6 +85,17 @@ const Header = ({ noHeader }) => {
     setShowSearch(false);
   };
 
+  const deleteUserHandler = () => {
+    deleteUser(user)
+      .then(async () => {
+        await remove(refdb(database, `users/` + user.uid));
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     noHeader || (
       <header className={`header ${mobileCondition} ${show}`}>
@@ -106,7 +120,7 @@ const Header = ({ noHeader }) => {
                   className="userImage"
                   onClick={() => setShowProfile((previous) => !previous)}
                 >
-                  <img src={user.photoURL || userFallbackImage} />
+                  <img src={user?.photoURL || userFallbackImage} />
                 </div>
               </div>
             )}
@@ -131,7 +145,7 @@ const Header = ({ noHeader }) => {
                     profileHandler();
                   }}
                 >
-                  <img src={user.photoURL || userFallbackImage} />
+                  <img src={user?.photoURL || userFallbackImage} />
                 </div>
               </div>
             )}
@@ -157,13 +171,26 @@ const Header = ({ noHeader }) => {
         {showProfile && (
           <div className="profileBanner">
             <div className="profileImageSection">
-              <img src={user.photoURL || userFallbackImage} />
-              <span>{user.displayName}</span>
+              <img src={user?.photoURL || userFallbackImage} />
+              <span>{user?.displayName}</span>
             </div>
             <div className="profileBannerItems">
               <div className="profileBannerItem">WatchList</div>
-              <div className="profileBannerItem">Logout</div>
-              <div className="profileBannerItem">DeleteAccount</div>
+              <div
+                className="profileBannerItem"
+                onClick={() => {
+                  signOut(auth);
+                  navigate(`/`);
+                }}
+              >
+                Logout
+              </div>
+              <div
+                className="profileBannerItem"
+                onClick={() => deleteUserHandler()}
+              >
+                DeleteAccount
+              </div>
             </div>
           </div>
         )}

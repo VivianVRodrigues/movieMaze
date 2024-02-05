@@ -6,7 +6,7 @@ import Details from "./pages/details/Details";
 import Explore from "./pages/explore/Explore";
 import SearchResult from "./pages/searchResult/SearchResult";
 import PageNotFound from "./pages/404/PageNotFound";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { fetchData } from "./util/api";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -102,7 +102,7 @@ function App() {
             user ? (
               <Home setNoHeader={setNoHeader} setNoFooter={setNoFooter}></Home>
             ) : (
-              <Register></Register>
+              <Navigate to={"/"} />
             )
           }
         />

@@ -108,7 +108,11 @@ const Register = ({ setNoHeader, setNoFooter }) => {
   };
 
   const handleGoogleAuth = () => {
-    signInWithPopup(auth, googleProvider).then(() => {
+    signInWithPopup(auth, googleProvider).then(async (res) => {
+      await update(refdb(database, `users/` + res.user.uid), {
+        username: res.user.displayName,
+        email: res.user.email,
+      });
       setLoginErr("");
       setEmailInput("");
       navigate(`/home`);
