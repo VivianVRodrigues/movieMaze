@@ -59,6 +59,7 @@ const Explore = () => {
     setGenreSelected(null);
     setSortSelected(null);
     setPage(1);
+    setFilter({});
     fetchInitialData();
   }, [mediaType]);
 

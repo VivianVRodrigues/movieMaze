@@ -18,7 +18,10 @@ const DetailsBanner = ({ videos, crew }) => {
     `/${mediaType}/${id}/watch/providers`
   );
 
-  const movieprovider = providerData?.results?.AD?.flatrate;
+  const movieprovider =
+    providerData?.results?.IN?.flatrate ||
+    providerData?.results?.IN?.rent ||
+    providerData?.results?.IN?.buy;
 
   const { url } = useSelector((state) => state.home);
 
