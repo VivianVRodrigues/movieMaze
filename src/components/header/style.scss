@@ -96,6 +96,29 @@
         font-size: 18px;
       }
     }
+
+    .profileSection {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+
+      @include md {
+        margin-left: 15px;
+      }
+
+      .userImage {
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
   }
 
   &.showMobileMenu,
@@ -121,9 +144,13 @@
         padding: 10px 20px;
         margin: 0;
 
-        &:last-child {
+        &:nth-last-child(2) {
           display: none;
         }
+      }
+
+      .profileSection {
+        display: none;
       }
     }
   }
@@ -182,6 +209,87 @@
 
         &::placeholder {
           color: rgb(255, 254, 251);
+        }
+      }
+    }
+  }
+
+  .profileBanner {
+    position: absolute;
+    margin-top: 5px;
+    // width: 100%;
+    right: 10px;
+    top: 60px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+    padding: 10px 10px;
+    background: var(--black3);
+    border-radius: 10px;
+    min-width: 200px;
+
+    @include md {
+      padding: 30px 0;
+      min-width: 400px;
+    }
+
+    .profileImageSection {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 10px 0;
+      font-size: 14px;
+      gap: 10px;
+      font-weight: 700;
+
+      @include md {
+        padding: 15px 0;
+        border-bottom: 1px solid grey;
+        font-size: 20px;
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+
+        @include md {
+          width: 150px;
+          height: 150px;
+        }
+      }
+    }
+
+    .profileBannerItems {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+
+      .profileBannerItem {
+        width: 100%;
+        padding: 5px 0;
+        font-size: 20px;
+        transition: all ease 0.3s;
+        cursor: pointer;
+        border-bottom: 1px solid grey;
+        border-radius: 4px;
+
+        @include md {
+          font-size: 30px;
+          padding: 10px 0;
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: grey;
         }
       }
     }

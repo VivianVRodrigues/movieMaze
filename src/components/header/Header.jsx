@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
+import userFallbackImage from "../../assets/userImage.jpg";
 
 import "./style.scss";
 
 import logo from "../../assets/filmFlare-logo.png";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = ({ noHeader }) => {
   const [showSearch, setShowSearch] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [mobileCondition, setMobileCondition] = useState("");
   const [show, setShow] = useState("top");
   const [query, setQuery] = useState("");
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { user } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,10 +55,12 @@ const Header = ({ noHeader }) => {
   const openSearch = () => {
     setShowSearch(true);
     setMobileCondition("");
+    setShowProfile(false);
   };
 
   const openMobileMenu = () => {
     setShowSearch(false);
+    setShowProfile(false);
     setMobileCondition("showMobileMenu");
   };
 
@@ -68,6 +74,12 @@ const Header = ({ noHeader }) => {
   const navigationHandler = (type) => {
     navigate(`/explore/${type}`);
     setMobileCondition("");
+  };
+
+  const profileHandler = () => {
+    setShowProfile((previous) => !previous);
+    setMobileCondition("");
+    setShowSearch(false);
   };
 
   return (
@@ -88,6 +100,16 @@ const Header = ({ noHeader }) => {
             <li className="menuItem">
               <HiOutlineSearch onClick={() => openSearch()} />
             </li>
+            {user && (
+              <div className="profileSection">
+                <div
+                  className="userImage"
+                  onClick={() => setShowProfile((previous) => !previous)}
+                >
+                  <img src={user.photoURL || userFallbackImage} />
+                </div>
+              </div>
+            )}
           </ul>
 
           <div className="mobileMenuItems">
@@ -100,6 +122,18 @@ const Header = ({ noHeader }) => {
               />
             ) : (
               <SlMenu onClick={() => openMobileMenu()} />
+            )}
+            {user && (
+              <div className="profileSection">
+                <div
+                  className="userImage"
+                  onClick={() => {
+                    profileHandler();
+                  }}
+                >
+                  <img src={user.photoURL || userFallbackImage} />
+                </div>
+              </div>
             )}
           </div>
         </ContentWrapper>
@@ -117,6 +151,20 @@ const Header = ({ noHeader }) => {
                 <VscChromeClose onClick={() => setShowSearch(false)} />
               </div>
             </ContentWrapper>
+          </div>
+        )}
+
+        {showProfile && (
+          <div className="profileBanner">
+            <div className="profileImageSection">
+              <img src={user.photoURL || userFallbackImage} />
+              <span>{user.displayName}</span>
+            </div>
+            <div className="profileBannerItems">
+              <div className="profileBannerItem">WatchList</div>
+              <div className="profileBannerItem">Logout</div>
+              <div className="profileBannerItem">DeleteAccount</div>
+            </div>
           </div>
         )}
       </header>
