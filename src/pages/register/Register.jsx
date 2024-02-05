@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import homePageImg from "../../assets/homePageImg1.jpg";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
-import { auth, database, refdb } from "../../firebase";
+import { auth, database, googleProvider, refdb } from "../../firebase";
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import { set, update } from "firebase/database";
@@ -106,6 +107,14 @@ const Register = ({ setNoHeader, setNoFooter }) => {
       });
   };
 
+  const handleGoogleAuth = () => {
+    signInWithPopup(auth, googleProvider).then(() => {
+      setLoginErr("");
+      setEmailInput("");
+      navigate(`/home`);
+    });
+  };
+
   return register === "signup" ? (
     <div className="signup">
       <div className="wrapper">
@@ -129,14 +138,8 @@ const Register = ({ setNoHeader, setNoFooter }) => {
           </span>
           {signupErr && <span className="err">{signupErr}</span>}
           <div className="iconsRegister">
-            <span className="icon">
+            <span className="icon" onClick={() => handleGoogleAuth()}>
               <FaGoogle></FaGoogle>
-            </span>
-            <span className="icon">
-              <FaInstagram></FaInstagram>
-            </span>
-            <span className="icon">
-              <FaFacebookF></FaFacebookF>
             </span>
           </div>
         </div>
@@ -171,14 +174,8 @@ const Register = ({ setNoHeader, setNoFooter }) => {
           </span>
           {loginErr && <span className="err">{loginErr}</span>}
           <div className="iconsRegister">
-            <span className="icon">
+            <span className="icon" onClick={() => handleGoogleAuth()}>
               <FaGoogle></FaGoogle>
-            </span>
-            <span className="icon">
-              <FaInstagram></FaInstagram>
-            </span>
-            <span className="icon">
-              <FaFacebookF></FaFacebookF>
             </span>
           </div>
         </div>
