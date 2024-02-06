@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import useFetch from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,11 @@ import dayjs from "dayjs";
 import Genres from "../../../components/genres/Genres";
 import CircleRating from "../../../components/circleRating/CircleRating";
 import VideoPopup from "../videoPopup/VideoPopup";
+import { get, onValue, update } from "firebase/database";
+import { database, refdb } from "../../../firebase";
+import { AuthContext } from "../../../context/AuthContext";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
 const DetailsBanner = ({ videos, crew }) => {
   const { mediaType, id } = useParams();
@@ -17,6 +22,7 @@ const DetailsBanner = ({ videos, crew }) => {
   const { data: providerData } = useFetch(
     `/${mediaType}/${id}/watch/providers`
   );
+  const { user } = useContext(AuthContext);
 
   const movieprovider =
     providerData?.results?.IN?.flatrate ||
@@ -26,6 +32,7 @@ const DetailsBanner = ({ videos, crew }) => {
   const { url } = useSelector((state) => state.home);
 
   const [show, setShow] = useState(false);
+  const [watchLater, setWatchLater] = useState(false);
 
   const genre_ids = data?.genres?.map((g) => g.id);
 
@@ -46,6 +53,45 @@ const DetailsBanner = ({ videos, crew }) => {
 
   const videoPopupHandler = () => {
     setShow(true);
+  };
+
+  useEffect(() => {
+    let arr = [];
+    get(refdb(database, "users/" + user.uid)).then((snapshot) => {
+      arr = snapshot.val()?.watchLater || [];
+
+      arr.forEach((movieId) => {
+        if (movieId === id) {
+          return setWatchLater(true);
+        }
+      });
+    });
+  }, [user.uid]);
+
+  const addWatchLater = async () => {
+    // setWatchList((list) => [...list, id]);
+    let arr = [];
+    onValue(refdb(database, "users/" + user.uid), (snapshot) => {
+      arr = snapshot.val()?.watchLater || [];
+    });
+
+    arr.push(id);
+    await update(refdb(database, "users/" + user.uid), {
+      watchLater: arr,
+    });
+  };
+
+  const removeWatchLater = async () => {
+    // setWatchList((list) => list.filter((movieId) => movieId !== id));
+    let arr = [];
+    onValue(refdb(database, "users/" + user.uid), (snapshot) => {
+      arr = snapshot.val()?.watchLater || [];
+    });
+
+    arr = arr.filter((movieID) => movieID !== id);
+    await update(refdb(database, "users/" + user.uid), {
+      watchLater: arr,
+    });
   };
 
   return (
@@ -82,6 +128,23 @@ const DetailsBanner = ({ videos, crew }) => {
                   <div className="row">
                     <div className="rating">
                       <CircleRating rating={data.vote_average.toFixed(1)} />
+                    </div>
+                    <div
+                      className="watchLater"
+                      onClick={() => setWatchLater((prev) => !prev)}
+                    >
+                      {watchLater ? (
+                        <div
+                          className="icon"
+                          onClick={() => removeWatchLater()}
+                        >
+                          <BookmarkAddedIcon />
+                        </div>
+                      ) : (
+                        <div className="icon" onClick={() => addWatchLater()}>
+                          <BookmarkIcon />
+                        </div>
+                      )}
                     </div>
                     <div
                       className="playButton"

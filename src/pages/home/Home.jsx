@@ -1,14 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import HeroBanner from "./heroBanner/HeroBanner";
 import Trending from "./trending/Trending";
 import CorouselSection from "./corouselSection/CorouselSection";
 
 const Home = ({ setNoHeader, setNoFooter }) => {
+  // const [watchList, setWatchList] = useState([]);
+
   useEffect(() => {
     setNoFooter(false);
     setNoHeader(false);
   }, []);
+
+  // useEffect(() => {
+  //   onValue(refdb(database, "users/" + user.uid), (snapshot) => {
+  //     setWatchList(snapshot.val().watchLater || []);
+  //   });
+  // }, [watchList]);
 
   return (
     <div>
