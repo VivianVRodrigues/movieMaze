@@ -60,13 +60,13 @@ const DetailsBanner = ({ videos, crew }) => {
     get(refdb(database, "users/" + user.uid)).then((snapshot) => {
       arr = snapshot.val()?.watchLater || [];
 
-      arr.forEach((movieId) => {
-        if (movieId === id) {
+      arr.forEach((objectData) => {
+        if (objectData.id === data.id) {
           return setWatchLater(true);
         }
       });
     });
-  }, [user.uid]);
+  }, [user, data]);
 
   const addWatchLater = async () => {
     // setWatchList((list) => [...list, id]);
@@ -75,7 +75,7 @@ const DetailsBanner = ({ videos, crew }) => {
       arr = snapshot.val()?.watchLater || [];
     });
 
-    arr.push(id);
+    arr.push({ ...data, media_type: mediaType });
     await update(refdb(database, "users/" + user.uid), {
       watchLater: arr,
     });
@@ -88,7 +88,7 @@ const DetailsBanner = ({ videos, crew }) => {
       arr = snapshot.val()?.watchLater || [];
     });
 
-    arr = arr.filter((movieID) => movieID !== id);
+    arr = arr.filter((objectData) => objectData.id !== data.id);
     await update(refdb(database, "users/" + user.uid), {
       watchLater: arr,
     });
