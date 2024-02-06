@@ -11,7 +11,7 @@ import { fetchData } from "./util/api";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getApiConfig, getGenres } from "./store/homeSlice";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/authContext";
 
 function App() {
   // const dispatch = useDispatch();
