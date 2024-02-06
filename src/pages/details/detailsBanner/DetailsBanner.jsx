@@ -12,7 +12,7 @@ import CircleRating from "../../../components/circleRating/CircleRating";
 import VideoPopup from "../videoPopup/VideoPopup";
 import { get, onValue, update } from "firebase/database";
 import { database, refdb } from "../../../firebase";
-import { AuthContext } from "../../../context/AuthContext";
+import { AuthContext } from "../../../context/authContext";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
