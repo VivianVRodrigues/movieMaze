@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { onValue } from "firebase/database";
 import { refdb, database } from "../../firebase";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/authContext";
 import "./style.scss";
 import HeroBanner from "./heroBanner/HeroBanner";
 import Trending from "./trending/Trending";
