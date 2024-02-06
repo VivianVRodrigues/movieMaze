@@ -9,10 +9,10 @@ import "./style.scss";
 import logo from "../../assets/filmFlare-logo.png";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { deleteUser, signOut } from "firebase/auth";
 import { auth, database, refdb } from "../../firebase";
 import { remove } from "firebase/database";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 const Header = ({ noHeader }) => {
   const [showSearch, setShowSearch] = useState(false);
