@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { deleteUser, signOut } from "firebase/auth";
 import { auth, database, refdb } from "../../firebase";
 import { remove } from "firebase/database";
-import { AuthContext } from "../../context/quthContext";
+import { AuthContext } from "../../context/authContext";
 
 const Header = ({ noHeader }) => {
   const [showSearch, setShowSearch] = useState(false);
