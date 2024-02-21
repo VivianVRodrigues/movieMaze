@@ -16,18 +16,10 @@ import { AuthContext } from "../../../context/authContext";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
-const DetailsBanner = ({ videos, crew }) => {
+const DetailsBanner = ({ videos, crew, providers, providersImage }) => {
   const { mediaType, id } = useParams();
   const { loading, data } = useFetch(`/${mediaType}/${id}`);
-  const { data: providerData } = useFetch(
-    `/${mediaType}/${id}/watch/providers`
-  );
   const { user } = useContext(AuthContext);
-
-  const movieprovider =
-    providerData?.results?.IN?.flatrate ||
-    providerData?.results?.IN?.rent ||
-    providerData?.results?.IN?.buy;
 
   const { url } = useSelector((state) => state.home);
 
@@ -186,23 +178,27 @@ const DetailsBanner = ({ videos, crew }) => {
                       <span className="text">Watch Trailer</span>
                     </div>
                   </div>
-                  {movieprovider?.length > 0 && (
+                  {providers?.length > 0 && (
                     <div className="providers">
                       <div className="providersheading">Available on : </div>
                       <div className="movieProviders">
-                        {movieprovider?.map((provider, i) => {
-                          const providerUrl = provider?.logo_path;
+                        {providers?.map((provider, i) => {
+                          const providerUrl =
+                            providersImage?.[provider?.service];
+
                           return (
                             <div className="movieProvider" key={i}>
-                              <img src={url.backdrop + providerUrl} />
+                              {providerUrl ? (
+                                <a href={provider?.link} target="_blank">
+                                  <img src={providerUrl} />
+                                </a>
+                              ) : (
+                                <div className="providerSkeleton skeleton"></div>
+                              )}
                             </div>
                           );
                         })}
                       </div>
-                      <img
-                        height="11px"
-                        src="https://widget.justwatch.com/assets/JW_logo_color_10px.svg"
-                      ></img>
                     </div>
                   )}
                   <div className="overview">

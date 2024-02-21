@@ -13,7 +13,7 @@ const HeroBanner = () => {
   const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
-  const { data, loading } = useFetch("/movie/popular");
+  const { data, loading } = useFetch("/movie/popular?include_adult=false");
 
   useEffect(() => {
     const bg =

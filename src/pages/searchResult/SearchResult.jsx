@@ -14,7 +14,7 @@ const SearchResult = () => {
 
   const fetchInitialData = () => {
     setLoading(true);
-    fetchData(`/search/multi?query=${query}&page=${page}`).then((res) => {
+    fetchData(`/search/multi?query=${query}`).then((res) => {
       setData(res.data);
       setPage((oldpage) => oldpage + 1);
       setLoading(false);
@@ -42,13 +42,14 @@ const SearchResult = () => {
   };
 
   useEffect(() => {
+    setData(null);
     setPage(1);
     fetchInitialData();
   }, [query]);
 
   return (
     <div className="searchSection">
-      {!loading ? (
+      {!loading && data ? (
         <>
           {data?.results?.length > 0 ? (
             <>

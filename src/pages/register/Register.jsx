@@ -10,8 +10,8 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { set, update } from "firebase/database";
-import { FaFacebookF, FaGoogle, FaInstagram } from "react-icons/fa";
+import { update } from "firebase/database";
+import { FaGoogle } from "react-icons/fa";
 
 const Register = ({ setNoHeader, setNoFooter }) => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
@@ -157,6 +157,7 @@ const Header = ({ noHeader }) => {
             <ContentWrapper>
               <div className="searchInput">
                 <input
+                  autoFocus
                   type="text"
                   placeholder="Search for movies or TV shows"
                   onChange={(e) => setQuery(e.target.value)}

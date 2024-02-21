@@ -233,10 +233,26 @@
 
           .movieProvider {
             cursor: pointer;
-            img {
+
+            a {
+              img {
+                width: 60px;
+                height: 60px;
+                padding: 5px;
+                border-radius: 50%;
+                border: #fff 1px solid;
+
+                @include md {
+                  width: 70px;
+                  height: 70px;
+                }
+              }
+            }
+            .providerSkeleton {
               width: 60px;
               height: 60px;
               border-radius: 50%;
+              background-color: var(--black3);
 
               @include md {
                 width: 70px;
