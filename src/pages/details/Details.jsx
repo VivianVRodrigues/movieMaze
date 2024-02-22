@@ -37,7 +37,7 @@ const Details = () => {
 
       setProvidersImage(imageObject);
     });
-  }, []);
+  }, [id]);
 
   return (
     <div>
